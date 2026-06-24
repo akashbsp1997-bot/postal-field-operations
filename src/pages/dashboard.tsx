@@ -20,18 +20,69 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard Overview</h1>
-        <p className="text-muted-foreground text-sm">Real-time metrics for today's beat operations.</p>
+    <Card>
+  <CardContent className="pt-6">
+    <div className="flex items-center gap-4">
+      <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center text-xl font-bold">
+        PM
       </div>
+
+      <div className="flex-1">
+        <h2 className="font-bold text-lg">
+          {stats?.postmanName || "Postman"}
+        </h2>
+
+        <p className="text-sm text-muted-foreground">
+          Beat No: {stats?.beatNo || "-"}
+        </p>
+
+        <p className="text-sm text-muted-foreground">
+          Office: {stats?.officeName || "-"}
+        </p>
+
+        <p className="text-sm text-muted-foreground">
+          Division: {stats?.divisionName || "-"}
+        </p>
+      </div>
+    </div>
+  </CardContent>
+</Card>
+
 
       {/* Quick Actions */}
       <div className="grid grid-cols-4 gap-2 md:gap-4">
-        <QuickActionLink href="/delivery" icon={Package} label="Scan Art" />
-        <QuickActionLink href="/sales" icon={TrendingUp} label="Log Sale" />
-        <QuickActionLink href="/leads" icon={Users} label="Add Lead" />
-        <QuickActionLink href="/beat-map" icon={Home} label="Map" />
+       <QuickActionLink href="/delivery" icon={Package} label="Scan Article" />
+<QuickActionLink href="/beat-map" icon={Home} label="Add House" />
+<QuickActionLink href="/beat-map" icon={Building2} label="Business" />
+<QuickActionLink href="/leads" icon={Users} label="New Lead" />
       </div>
+<Card>
+  <CardHeader>
+    <CardTitle>Today's Activity</CardTitle>
+  </CardHeader>
+
+  <CardContent>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+
+      <Badge variant="secondary">
+        Delivered: {stats?.delivered || 0}
+      </Badge>
+
+      <Badge variant="secondary">
+        Pending: {stats?.pendingDeliveries || 0}
+      </Badge>
+
+      <Badge variant="secondary">
+        Returned: {stats?.returned || 0}
+      </Badge>
+
+      <Badge variant="secondary">
+        Leads: {stats?.totalLeads || 0}
+      </Badge>
+
+    </div>
+  </CardContent>
+</Card>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard 
