@@ -21,9 +21,36 @@ L.Icon.Default.mergeOptions({
   shadowUrl:     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
 });
 
-function makeIcon(type: "house" | "business" | "user") {
-  const color = type === "house" ? "#10b981" : type === "business" ? "#f59e0b" : "#3b82f6";
-  const emoji = type === "house" ? "🏠" : type === "business" ? "🏢" : "📍";
+function makeIcon(
+ type:
+ | "house"
+ | "business"
+ | "user"
+ | "newhouse"
+ | "lead"
+)
+
+ {
+const color =
+ type === "house"
+   ? "#3b82f6"
+   : type === "business"
+   ? "#f59e0b"
+   : type === "newhouse"
+   ? "#10b981"
+   : type === "lead"
+   ? "#8b5cf6"
+   : "#ef4444";
+const emoji =
+ type === "house"
+   ? "🏠"
+   : type === "business"
+   ? "🏢"
+   : type === "newhouse"
+   ? "🟢"
+   : type === "lead"
+   ? "💰"
+   : "📍";
   return L.divIcon({
     html: `<div style="width:34px;height:34px;background:${color};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 2px 6px rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.4)">${emoji}</div>`,
     className: "",
@@ -253,6 +280,22 @@ export default function BeatMap() {
                   <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-blue-500 inline-block" /> You</span>
                 </div>
               )}
+<Button
+ variant="outline"
+ onClick={()=>{
+   navigator.geolocation.getCurrentPosition(
+    pos=>{
+      setMapCenter([
+       pos.coords.latitude,
+       pos.coords.longitude
+      ])
+    }
+   )
+ }}
+>
+ <Navigation className="w-4 h-4 mr-2" />
+ My Location
+</Button>
 
               {/* List View */}
               {viewMode === "list" && (
