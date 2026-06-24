@@ -23,6 +23,8 @@ export default function Delivery() {
   const [scannerOpen, setScannerOpen] = useState(false);
   const [scannedArticle, setScannedArticle] = useState<string | null>(null);
   const [proofArticle, setProofArticle] = useState<Article | null>(null);
+const [selectedStatus,setSelectedStatus] =
+useState("delivered");
 
   const processBarcode = (code: string) => {
     const trimmed = code.trim();
@@ -50,6 +52,37 @@ export default function Delivery() {
     setScannerOpen(false);
     processBarcode(code);
   };
+<div className="flex gap-2 flex-wrap mb-4">
+
+<Button
+ variant={selectedStatus==="delivered"?"default":"outline"}
+ onClick={()=>setSelectedStatus("delivered")}
+>
+ Delivered
+</Button>
+
+<Button
+ variant={selectedStatus==="returned"?"default":"outline"}
+ onClick={()=>setSelectedStatus("returned")}
+>
+ Returned
+</Button>
+
+<Button
+ variant={selectedStatus==="locked"?"default":"outline"}
+ onClick={()=>setSelectedStatus("locked")}
+>
+ Door Locked
+</Button>
+
+<Button
+ variant={selectedStatus==="refused"?"default":"outline"}
+ onClick={()=>setSelectedStatus("refused")}
+>
+ Refused
+</Button>
+
+</div>
 
   // Opens the proof-of-delivery sheet instead of immediately marking
   const initiateDelivery = (article: Article) => setProofArticle(article);
@@ -66,7 +99,7 @@ export default function Delivery() {
       // 1. Save delivery record
       await createDelivery.mutateAsync({
         article_id: proofArticle.id,
-        delivery_status: "delivered",
+delivery_status: selectedStatus,
         postman_id: user.id,
         remarks: proof.notes,
         delivered_at: new Date().toISOString(),
